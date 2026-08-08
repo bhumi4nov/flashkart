@@ -1,0 +1,321 @@
+====================================================
+FLASHKART BACKEND API COLLECTION
+====================================================
+
+Base URL
+------------------------------------
+http://localhost:5000/api
+
+====================================================
+1. USER REGISTER
+====================================================
+
+Method:
+POST
+
+URL:
+/users/register
+
+Headers:
+Content-Type: application/json
+
+Body:
+
+{
+    "name": "Admin",
+    "email": "admin@gmail.com",
+    "password": "123456"
+}
+
+Expected:
+201 Created
+
+
+====================================================
+2. USER LOGIN
+====================================================
+
+Method:
+POST
+
+URL:
+/users/login
+
+Headers:
+Content-Type: application/json
+
+Body:
+
+{
+    "email": "admin@gmail.com",
+    "password": "123456"
+}
+
+Response:
+
+{
+    "message": "Login Successful",
+    "token": "YOUR_JWT_TOKEN"
+}
+
+Copy this JWT Token.
+
+====================================================
+3. PROTECTED ROUTE
+====================================================
+
+Method:
+GET
+
+URL:
+/users/profile
+
+Headers:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Expected:
+200 OK
+
+
+====================================================
+4. CREATE PRODUCT
+====================================================
+
+Method:
+POST
+
+URL:
+/products
+
+Headers:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Content-Type: application/json
+
+Body:
+
+{
+    "name": "iPhone 16 Pro",
+    "description": "Apple flagship phone",
+    "price": 120000,
+    "stock": 50,
+    "reservedStock": 0,
+    "isActive": true
+}
+
+Expected:
+201 Created
+
+
+====================================================
+5. CREATE PRODUCT VALIDATION
+====================================================
+
+Method:
+POST
+
+URL:
+/products
+
+Headers:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Body:
+
+{
+    "name": "",
+    "price": -100,
+    "stock": -5
+}
+
+Expected:
+
+400 Bad Request
+
+
+====================================================
+6. GET ALL PRODUCTS
+====================================================
+
+Method:
+GET
+
+URL:
+/products
+
+Headers:
+No Header Required
+
+Expected:
+200 OK
+
+
+====================================================
+7. GET PRODUCT BY ID
+====================================================
+
+Method:
+GET
+
+URL:
+
+/products/PRODUCT_ID
+
+Example
+
+/products/2e2a88e2-5c7d-4d6b-b1fd-xxxxxxxx
+
+Expected:
+200 OK
+
+
+====================================================
+8. INVALID PRODUCT ID
+====================================================
+
+Method:
+GET
+
+URL:
+
+/products/123
+
+Expected:
+
+404 Not Found
+
+{
+    "message":"Product not found"
+}
+
+
+====================================================
+9. UPDATE PRODUCT
+====================================================
+
+Method:
+PUT
+
+URL:
+
+/products/PRODUCT_ID
+
+Headers:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Content-Type: application/json
+
+Body:
+
+{
+    "price": 125000,
+    "stock": 40
+}
+
+Expected:
+
+200 OK
+
+
+====================================================
+10. UPDATE VALIDATION
+====================================================
+
+Method:
+PUT
+
+URL:
+
+/products/PRODUCT_ID
+
+Headers:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Body:
+
+{
+    "price": -10
+}
+
+Expected:
+
+400 Bad Request
+
+
+====================================================
+11. DELETE PRODUCT
+====================================================
+
+Method:
+DELETE
+
+URL:
+
+/products/PRODUCT_ID
+
+Headers:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Expected:
+
+200 OK
+
+{
+    "message":"Product Deleted Successfully"
+}
+
+
+====================================================
+12. DELETE SAME PRODUCT AGAIN
+====================================================
+
+Method:
+DELETE
+
+URL:
+
+/products/PRODUCT_ID
+
+Expected:
+
+404 Not Found
+
+{
+    "message":"Product not found"
+}
+
+====================================================
+PRODUCT MODULE COMPLETED
+====================================================
+
+✔ User Register
+✔ User Login
+✔ JWT Authentication
+✔ Protected Route
+✔ Create Product
+✔ Validation
+✔ Get All Products
+✔ Get Product By ID
+✔ Update Product
+✔ Delete Product
+
+====================================================
+NEXT MODULE
+====================================================
+
+1. Product Pagination
+2. Product Search
+3. Product Sorting
+4. Cart Module
+5. Redis Reservation
+6. Checkout
+7. Order
+8. High Concurrency
+9. Docker
+10. Swagger

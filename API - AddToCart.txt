@@ -1,0 +1,34 @@
+====================================================
+5. Add to Cart
+====================================================
+
+Method:
+POST
+
+URL:
+/api/cart/add
+
+Headers:
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Body:
+
+{
+    "productId": "YOUR_PRODUCT_UUID",
+    "quantity": 2
+}
+
+Expected Response:
+
+{
+    "message": "Product added to cart successfully",
+    "data": {
+        "id": "...",
+        "quantity": 2,
+        "price": 50000
+    }
+}
+
+====================================================
+6. Add to Cart
+====================================================
