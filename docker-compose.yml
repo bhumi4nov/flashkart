@@ -1,0 +1,47 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: flashkart-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: flashkart
+      POSTGRES_PASSWORD: flashkart_password
+      POSTGRES_DB: flashkart
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: flashkart-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: flashkart-backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      NODE_ENV: production
+
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: flashkart
+      DB_PASSWORD: flashkart_password
+      DB_NAME: flashkart
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "5000:5000"
+
+volumes:
+  postgres_data:
