@@ -1,0 +1,55 @@
+name: FlashKart CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: flashkart-frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.11.0"
+          cache: "npm"
+          cache-dependency-path: flashkart-frontend/package-lock.json
+
+      - name: Setup npm
+        run: npm install -g npm@11.6.1
+
+      - name: Verify Node and npm
+        run: |
+          node --version
+          npm --version
+
+      - name: Install dependencies
+        working-directory: flashkart-frontend
+        run: npm ci
+
+      - name: ESLint
+        working-directory: flashkart-frontend
+        run: npm run lint
+
+      - name: Prettier check
+        working-directory: flashkart-frontend
+        run: npm run format:check
+
+      - name: Build
+        working-directory: flashkart-frontend
+        run: npm run build
